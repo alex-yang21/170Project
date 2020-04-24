@@ -13,9 +13,9 @@ def solve(G):
         T: networkx.Graph
     """
 
-    # TODO: your code here!
-    min_dom_set = min_weighted_dominating_set(G)
-    min_dom_tree = minimum_spanning_tree(min_dom_set) # how to give function the edge weights
+    min_dom_set = nx.min_weighted_dominating_set(G)
+    min_dom_graph = G.subgraph(list(min_dom_set))
+    min_dom_tree = nx.minimum_spanning_tree(min_dom_graph) # how to give function the edge weights
     return min_dom_tree
 
 if __name__ == '__main__':
