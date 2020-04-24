@@ -14,7 +14,20 @@ def solve(G):
     """
 
     # TODO: your code here!
-    pass
+    min_dom_set = min_weighted_dominating_set(G)
+    min_dom_tree = minimum_spanning_tree(min_dom_set) # how to give function the edge weights
+    return min_dom_tree
+
+if __name__ == '__main__':
+    assert len(sys.argv) == 2
+    path = sys.argv[1]
+    G = read_input_file(path)
+    T = solve(G)
+    assert is_valid_network(G, T)
+    print("Average  pairwise distance: {}".format(average_pairwise_distance(T)))
+    write_output_file(T, 'out/test.out')
+
+
 
 
 # Here's an example of how to run your solver.
