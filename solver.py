@@ -36,10 +36,11 @@ def solve(G):
         for node1 in curr_path:
             return_set.add(node1)
 
-    # checks if nodes were added to return set, if none just return MST
+    # checks if nodes were added to return set, if none there is a central node and return single node
     if not return_set:
-        min_tree = nx.minimum_spanning_tree(G)
-        return min_tree
+        r = nx.Graph()
+        r.add_node(source)
+        return r
 
     # we recreate the subgraph with the necessary nodes to keep it connected
     min_dom_subgraph = G.subgraph(list(return_set))
