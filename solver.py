@@ -23,6 +23,10 @@ def solve(G):
 
     # we follow the original idea, creating a dominating set and building a tree from that
     min_dom_set = nx.algorithms.approximation.min_weighted_dominating_set(G)
+
+    # checks if a dominating set exists
+    assert min_dom_set
+
     return_set = set([]) # we create a set of nodes that we want to be in the final tree
     source = min_dom_set.pop()
     # we connect all the nodes in the dominating set by finding all the nodes in the shortest paths
@@ -31,6 +35,12 @@ def solve(G):
         curr_path = nx.algorithms.shortest_paths.dijkstra_path(G, source, node)
         for node1 in curr_path:
             return_set.add(node1)
+
+    # checks if nodes were added to return set, if none just return MST
+    if not return_set:
+        min_tree = nx.minimum_spanning_tree(G)
+        return min_tree
+
     # we recreate the subgraph with the necessary nodes to keep it connected
     min_dom_subgraph = G.subgraph(list(return_set))
     # resulting graph will have extra unnecessary edges, use MST to prune
@@ -43,6 +53,7 @@ def solve(G):
     return min_tree
     """
 
+
 if __name__ == "__main__":
     output_dir = "outputs"
     input_dir = "inputs"
@@ -51,7 +62,6 @@ if __name__ == "__main__":
         G = read_input_file(f"{input_dir}/{input_path}")
         T = solve(G)
         write_output_file(T, f"{output_dir}/{graph_name}.out")
-
 
 
 """
