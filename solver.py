@@ -1,6 +1,6 @@
 import networkx as nx
 from parse import *
-from utils import is_valid_network, average_pairwise_distance
+from utils import is_valid_network, average_pairwise_distance, deg_heuristic
 from networkx.algorithms import approximation
 from networkx.algorithms import shortest_paths
 import sys
@@ -16,8 +16,19 @@ def solve(G):
         T: networkx.Graph
     """
 
+
+
+
+    n = G.number_of_nodes()
+    for j in range(0, n):
+        f1 = deg_heuristic(G, j)
+        G.add_node(j, weight=f1)
+
+    # print(G[0][1]['weight'])
+
     # we follow the original idea, creating a dominating set and building a tree from that
-    min_dom_set = nx.algorithms.approximation.min_weighted_dominating_set(G)
+    min_dom_set = nx.algorithms.approximation.min_weighted_dominating_set(G, "weight")
+    # print(min_dom_set)
     return_set = set([]) # we create a set of nodes that we want to be in the final tree
     source = min_dom_set.pop()
     # we connect all the nodes in the dominating set by finding all the nodes in the shortest paths
@@ -37,6 +48,8 @@ def solve(G):
     min_dom_subgraph = G.subgraph(list(return_set))
     # resulting graph will have extra unnecessary edges, use MST to prune
     min_dom_tree = nx.minimum_spanning_tree(min_dom_subgraph)
+
+    # print(min_dom_tree[0][1]['weight'])
     return min_dom_tree
 
     """
@@ -46,28 +59,28 @@ def solve(G):
     """
 
 
-if __name__ == "__main__":
-    output_dir = "outputs"
-    input_dir = "inputs"
-    for input_path in os.listdir(input_dir):
-        graph_name = input_path.split(".")[0]
-        G = read_input_file(f"{input_dir}/{input_path}")
-        T = solve(G)
-        write_output_file(T, f"{output_dir}/{graph_name}.out")
+# if __name__ == "__main__":
+#     output_dir = "outputs"
+#     input_dir = "inputs"
+#     for input_path in os.listdir(input_dir):
+#         graph_name = input_path.split(".")[0]
+#         G = read_input_file(f"{input_dir}/{input_path}")
+#         T = solve(G)
+#         write_output_file(T, f"{output_dir}/{graph_name}.out")
 
 
-"""
+# """
 if __name__ == '__main__':
     assert len(sys.argv) == 2
     path = sys.argv[1]
     # graph_name = path.split(".")[0] --> doesn't work
-    G = read_input_file(path)
+    G = read_input_file("inputs/" +path)
     T = solve(G)
     assert is_valid_network(G, T)
     print("Average  pairwise distance: {}".format(average_pairwise_distance(T)))
     # need to change to be dynamic for file name
     write_output_file(T, f"myoutputs/test.out")
-"""
+# """
 
 
 

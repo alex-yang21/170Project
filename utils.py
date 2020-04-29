@@ -101,3 +101,22 @@ def average_pairwise_distance_fast(T):
             w = T[c][p]["weight"]
             cost += 2 * a * b * w
     return cost / (len(T) * (len(T) - 1))
+
+def deg_heuristic(G, v):
+    """calculates heuristic using formula deg/sum(edge weights)
+
+    Args:
+        G: graph
+        v: (int) vertex v in G
+
+    """
+    iter = G.neighbors(v)
+    deg = 0
+    sum_edge = 0
+    for u in iter:
+        sum_edge += G.get_edge_data(v, u)['weight']
+        deg += 1
+    if sum_edge == 0:
+        sum_edge = 1
+
+    return deg/sum_edge + 1
