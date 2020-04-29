@@ -1,9 +1,10 @@
 import networkx as nx
-from parse import read_input_file, write_output_file
+from parse import *
 from utils import is_valid_network, average_pairwise_distance
 from networkx.algorithms import approximation
 from networkx.algorithms import shortest_paths
 import sys
+import os
 
 
 def solve(G):
@@ -14,6 +15,12 @@ def solve(G):
     Returns:
         T: networkx.Graph
     """
+
+    # have to double check that I'm not changing any edge weights when recreating the graph
+    # my guess is instead, that we are adding all of the nodes to the return set
+    # and that the graph weights have been changed to seem like it weighs less
+
+
     # we follow the original idea, creating a dominating set and building a tree from that
     min_dom_set = nx.algorithms.approximation.min_weighted_dominating_set(G)
     return_set = set([]) # we create a set of nodes that we want to be in the final tree
@@ -36,6 +43,18 @@ def solve(G):
     return min_tree
     """
 
+if __name__ == "__main__":
+    output_dir = "outputs"
+    input_dir = "inputs"
+    for input_path in os.listdir(input_dir):
+        graph_name = input_path.split(".")[0]
+        G = read_input_file(f"{input_dir}/{input_path}")
+        T = solve(G)
+        write_output_file(T, f"{output_dir}/{graph_name}.out")
+
+
+
+"""
 if __name__ == '__main__':
     assert len(sys.argv) == 2
     path = sys.argv[1]
@@ -45,7 +64,8 @@ if __name__ == '__main__':
     assert is_valid_network(G, T)
     print("Average  pairwise distance: {}".format(average_pairwise_distance(T)))
     # need to change to be dynamic for file name
-    write_output_file(T, f"outputs/test.out")
+    write_output_file(T, f"myoutputs/test.out")
+"""
 
 
 
