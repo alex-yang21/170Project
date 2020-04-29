@@ -16,17 +16,8 @@ def solve(G):
         T: networkx.Graph
     """
 
-    # have to double check that I'm not changing any edge weights when recreating the graph
-    # my guess is instead, that we are adding all of the nodes to the return set
-    # and that the graph weights have been changed to seem like it weighs less
-
-
     # we follow the original idea, creating a dominating set and building a tree from that
     min_dom_set = nx.algorithms.approximation.min_weighted_dominating_set(G)
-
-    # checks if a dominating set exists
-    assert min_dom_set
-
     return_set = set([]) # we create a set of nodes that we want to be in the final tree
     source = min_dom_set.pop()
     # we connect all the nodes in the dominating set by finding all the nodes in the shortest paths
