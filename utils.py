@@ -116,7 +116,9 @@ def deg_heuristic(G, v):
     for u in iter:
         sum_edge += G.get_edge_data(v, u)['weight']
         deg += 1
-    if sum_edge == 0:
+    if sum_edge == 0 or deg == 0:
         sum_edge = 1
+        deg = 1
+    # if
 
-    return deg/sum_edge + 1
+    return (sum_edge/deg) 
