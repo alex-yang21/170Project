@@ -16,7 +16,9 @@ def solve(G):
         T: networkx.Graph
     """
 
-
+    # central = get_central(G)
+    # if len(central) > 0:
+    #     return central
 
 
     n = G.number_of_nodes()
@@ -29,6 +31,7 @@ def solve(G):
     # we follow the original idea, creating a dominating set and building a tree from that
     min_dom_set = nx.algorithms.approximation.min_weighted_dominating_set(G, "weight")
     # print(min_dom_set)
+    print(min_dom_set)
     return_set = set([]) # we create a set of nodes that we want to be in the final tree
     source = min_dom_set.pop()
 
@@ -40,6 +43,7 @@ def solve(G):
             return_set.add(node1)
 
     # checks if nodes were added to return set, if none there is a central node and return single node
+    print(len(return_set))
     if not return_set:
         r = nx.Graph()
         r.add_node(source)

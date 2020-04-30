@@ -121,4 +121,4 @@ def deg_heuristic(G, v):
         deg = 1
     # if
 
-    return (sum_edge/deg) 
+    return (sum_edge/deg) + 1
