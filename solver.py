@@ -16,10 +16,6 @@ def solve(G):
         T: networkx.Graph
     """
 
-    # central = get_central(G)
-    # if len(central) > 0:
-    #     return central
-
 
     n = G.number_of_nodes()
     for j in range(0, n):
@@ -31,7 +27,7 @@ def solve(G):
     # we follow the original idea, creating a dominating set and building a tree from that
     min_dom_set = nx.algorithms.approximation.min_weighted_dominating_set(G, "weight")
     # print(min_dom_set)
-    print(min_dom_set)
+    # print(min_dom_set)
     return_set = set([]) # we create a set of nodes that we want to be in the final tree
     source = min_dom_set.pop()
 
@@ -43,7 +39,7 @@ def solve(G):
             return_set.add(node1)
 
     # checks if nodes were added to return set, if none there is a central node and return single node
-    print(len(return_set))
+    # print(len(return_set))
     if not return_set:
         r = nx.Graph()
         r.add_node(source)
@@ -64,28 +60,28 @@ def solve(G):
     """
 
 #
-# if __name__ == "__main__":
-#     output_dir = "outputs"
-#     input_dir = "inputs"
-#     for input_path in os.listdir(input_dir):
-#         graph_name = input_path.split(".")[0]
-#         G = read_input_file(f"{input_dir}/{input_path}")
-#         T = solve(G)
-#         print(graph_name)
-#         write_output_file(T, f"{output_dir}/{graph_name}.out")
+if __name__ == "__main__":
+    output_dir = "outputs"
+    input_dir = "inputs"
+    for input_path in os.listdir(input_dir):
+        graph_name = input_path.split(".")[0]
+        G = read_input_file(f"{input_dir}/{input_path}")
+        T = solve(G)
+        # print(graph_name)
+        write_output_file(T, f"{output_dir}/{graph_name}.out")
 
 
 # """
-if __name__ == '__main__':
-    assert len(sys.argv) == 2
-    path = sys.argv[1]
-    # graph_name = path.split(".")[0] --> doesn't work
-    G = read_input_file("inputs/" +path)
-    T = solve(G)
-    assert is_valid_network(G, T)
-    print("Average  pairwise distance: {}".format(average_pairwise_distance(T)))
-    # need to change to be dynamic for file name
-    write_output_file(T, f"myoutputs/test.out")
+# if __name__ == '__main__':
+#     assert len(sys.argv) == 2
+#     path = sys.argv[1]
+#     # graph_name = path.split(".")[0] --> doesn't work
+#     G = read_input_file("inputs/" +path)
+#     T = solve(G)
+#     assert is_valid_network(G, T)
+#     print("Average  pairwise distance: {}".format(average_pairwise_distance(T)))
+#     # need to change to be dynamic for file name
+#     write_output_file(T, f"myoutputs/test.out")
 # """
 
 

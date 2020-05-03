@@ -15,3 +15,7 @@ When writing inputs/outputs:
 - Make sure you use the functions `write_input_file` and `write_output_file` provided
 - Run the functions `read_input_file` and `read_output_file` to validate your files before submitting!
   - These are the functions run by the autograder to validate submissions
+
+To run program: py solver.py inputs
+- we used a python virtualenv to overcome any issues with networkx Module not being found
+- the bulk of our code is in the solver.py file and we added one function to utils.py that we call in solver.
